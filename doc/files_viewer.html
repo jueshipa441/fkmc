@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件查看 - FK服务器</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="nav-with-logo">
+            </div>
+            <ul>
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../servers/servers.html">服务器列表</a></li>
+                <li><a href="../notice/announcements.html">公告系统</a></li>
+                <li><a href="../act/activities.html">活动信息</a></li>
+                <li><a href="files_viewer.html">文件查看</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="files-container">
+            <div class="files-header">
+                <h1>文档文件查看</h1>
+                <p>这里展示服务器相关的文档和手册</p>
+            </div>
+            
+            <div class="sort-controls">
+                <button id="sort-by-name" class="sort-btn active">
+                    按文件名排序
+                    <span class="sort-direction" id="sort-direction-name">↑</span>
+                </button>
+                <button id="sort-by-time" class="sort-btn">
+                    按上传时间排序
+                    <span class="sort-direction" id="sort-direction-time">↑</span>
+                </button>
+            </div>
+            
+            <div id="file-list" class="file-list">
+                <!-- 文件列表将通过JavaScript动态生成 -->
+                <div class="no-files">
+                    加载文件列表中...
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 fkmc.xyz. 保留所有权利.</p>
+    </footer>
+
+    <script src="files_viewer.js"></script>
+</body>
+</html>

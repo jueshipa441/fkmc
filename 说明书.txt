@@ -1,0 +1,105 @@
+FK服务器网站管理员说明书
+
+一、活动管理
+活动数据存储在 `act/activities.json` 文件中，可直接编辑此JSON文件进行管理。
+
+1. 添加新活动
+- 打开 `act/activities.json` 文件
+- 在数组末尾添加新活动对象，包含以下必填字段：
+  - `id`: 唯一标识（数字）
+  - `title`: 活动标题
+  - `description`: 活动描述
+  - `startTime`: 开始日期（格式：YYYY-MM-DD）
+  - `endTime`: 结束日期（格式：YYYY-MM-DD）
+  - `specificTime`: 具体时间（如：每天 18:00-21:00）
+  - `location`: 活动地点
+  - `poster`: 海报图片路径
+  - `images`: 活动图片数组包括图片路径
+  - `details`: 活动详情
+  - `showOnHomepage`: 是否在首页显示（1=显示，0=不显示）
+  - `isPinned`: 是否置顶（1=置顶，0=不置顶）
+以下内容提供复制
+,
+  {
+    "id": "2",
+    "title": "测试活动1",
+    "description": "这是2025年的活动",
+    "startTime": "2025-1-01",
+    "endTime": "2025-1-2",
+    "specificTime": "全天 00:00-23:59",
+    "location": "国际建筑服",
+    "isPinned": 0,
+    "poster": "../act/act_poster/1.jpg（海报路径）",
+    "images": ["../act/acts/1_1.jpg（图片路径）""../act/acts/1_1.jpg（图片路径）"],
+    "details": "文案文案",
+    "showOnHomepage": 0
+  }
+
+2. 修改活动
+- 找到需要修改的活动对象
+- 更新对应字段的值
+
+3. 删除活动
+- 删除对应的活动对象（包含大括号 {} 及内部所有内容）
+- 注意保持JSON格式正确（删除后检查逗号）
+
+二、公告管理
+公告数据存储在 `notice/redact.js` 文件中，通过直接编辑此文件进行管理。
+
+1. 添加新公告
+- 打开 `notice/redact.js` 文件
+- 在 `announcements` 数组中添加新公告对象，格式如下：
+以下内容提供复制
+  ,{
+      title: "公告标题",
+      content: `
+      <p>公告内容段落1</p>
+      <p>公告内容段落2</p>
+      `,
+      date: "YYYY-MM-DD", // 日期格式
+      pinned: 0 // 是否置顶，0=不置顶, 1=置顶
+  }
+
+  注意：第一个公告对象前不需要逗号，后续公告对象前需要加逗号
+
+2. 修改公告
+- 找到需要修改的公告对象
+- 更新对应字段的值，如标题、内容、日期或置顶状态
+
+3. 删除公告
+- 找到需要删除的公告对象
+- 删除该对象的完整代码（包含大括号 {} 及内部所有内容）
+- 注意：删除后检查相邻公告对象间的逗号是否正确
+
+三、文件下载管理
+文件下载功能通过 `doc` 目录下的配置文件和实际文件实现。
+
+1. 添加新文件
+将文件放置或移除/doc/doc_list文件夹
+运行update_file_list.py文件
+可在files_config.json中设置是否置顶
+- 打开 `doc/files_config.json` 文件
+- 在 `files` 数组中添加新文件配置，包含以下字段：
+  - `name`: 文件名
+  - `size`: 文件大小（格式：XX.XX KB）
+  - `path`: 文件相对路径
+  - `time`: 上传时间（格式：YYYY-MM-DD HH:MM:SS）
+  - `pinned`: 是否置顶（1=置顶，0=不置顶）
+
+2. 修改文件信息
+- 找到对应文件的配置对象
+- 更新所需字段的值
+
+3. 删除文件
+- 从 `doc/files_config.json` 中删除对应配置对象
+- 从 `doc/doc_list/` 目录中删除实际文件
+运行update_file_list.py
+
+四、启动城市服状况检测
+运行'servers/server_status.py'文件
+调整n的数值来改变扫描间隔
+
+五、注意事项
+1. 所有修改需保存文件后刷新网页才能生效
+2. 编辑JSON文件时请注意保持格式正确
+3. 图片和文件路径需使用相对路径

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "1",
+    "title": "测试活动",
+    "description": "这是2025年的活动",
+    "startTime": "2025-01-01",
+    "endTime": "2025-02-01",
+    "specificTime": "每天 18:00-21:00",
+    "location": "国际建筑服",
+    "isPinned": 0,
+    "poster": "../act/act_poster/1.jpg",
+    "images": ["../act/acts/1_1.jpg"],
+    "details": "文案文案",
+    "showOnHomepage": 1
+  }
+]
