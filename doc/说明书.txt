@@ -1,5 +1,0 @@
-1，增删可下载文件
-将文件放置或移除/doc/doc_list文件夹
-运行update_file_list.py文件
-可在files_config.json中设置是否置顶
-"pinned": 1是置顶，0是非置顶
