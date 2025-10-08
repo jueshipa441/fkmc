@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公告系统诊断</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .diagnostic-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success {
+            background-color: #e8f5e9;
+            border-color: #4caf50;
+        }
+        .error {
+            background-color: #ffebee;
+            border-color: #f44336;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>公告系统诊断工具</h1>
+    
+    <div class="diagnostic-section" id="step-1">
+        <h2>1. 检查数据文件加载</h2>
+        <div id="data-result">加载中...</div>
+    </div>
+    
+    <div class="diagnostic-section" id="step-2">
+        <h2>2. 显示原始数据</h2>
+        <pre id="raw-data">-</pre>
+    </div>
+    
+    <div class="diagnostic-section" id="step-3">
+        <h2>3. 手动渲染公告</h2>
+        <div id="manual-render">加载中...</div>
+    </div>
+    
+    <script src="redact.js"></script>
+    <script>
+        // 等待页面加载完成
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== 公告系统诊断开始 ===');
+            
+            // 步骤1: 检查数据文件加载
+            const dataResult = document.getElementById('data-result');
+            const rawDataElem = document.getElementById('raw-data');
+            const manualRender = document.getElementById('manual-render');
+            
+            if (window.announcementsData) {
+                console.log('✓ 找到announcementsData数据');
+                dataResult.textContent = `✓ 成功加载了${window.announcementsData.length}条公告数据`;
+                dataResult.className = 'success';
+                document.getElementById('step-1').className = 'diagnostic-section success';
+                
+                // 显示原始数据
+                rawDataElem.textContent = JSON.stringify(window.announcementsData, null, 2);
+            } else {
+                console.error('✗ 未找到announcementsData数据');
+                dataResult.textContent = '✗ 未找到announcementsData，请检查redact.js文件';
+                dataResult.className = 'error';
+                document.getElementById('step-1').className = 'diagnostic-section error';
+            }
+            
+            // 步骤3: 手动渲染公告
+            if (window.announcementsData && window.announcementsData.length > 0) {
+                manualRender.innerHTML = '';
+                
+                // 简单排序函数（按日期倒序）
+                const sorted = window.announcementsData.sort((a, b) => {
+                    // 先按置顶状态排序
+                    if (a.pinned > b.pinned) return -1;
+                    if (a.pinned < b.pinned) return 1;
+                    // 再按日期排序
+                    return new Date(b.date) - new Date(a.date);
+                });
+                
+                // 渲染公告
+                sorted.forEach((announcement, index) => {
+                    const card = document.createElement('div');
+                    card.style.marginBottom = '15px';
+                    card.style.padding = '10px';
+                    card.style.border = '1px solid #ddd';
+                    card.style.borderRadius = '5px';
+                    if (announcement.pinned > 0) {
+                        card.style.backgroundColor = '#e3f2fd';
+                        card.style.borderColor = '#1976d2';
+                    }
+                    
+                    card.innerHTML = `
+                        <h3>${index + 1}. ${announcement.title}</h3>
+                        <p><strong>日期:</strong> ${announcement.date}</p>
+                        <p><strong>置顶状态:</strong> ${announcement.pinned > 0 ? '置顶' : '不置顶'}</p>
+                        <div style="margin-top: 10px;">${announcement.content}</div>
+                    `;
+                    
+                    manualRender.appendChild(card);
+                });
+            } else {
+                manualRender.textContent = '没有数据可供渲染';
+                manualRender.className = 'error';
+            }
+            
+            console.log('=== 公告系统诊断结束 ===');
+        });
+    </script>
+</body>
+</html>
